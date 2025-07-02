@@ -54,7 +54,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
   const { colors } = useTheme();
   const isMyMessage = message.sender === "me";
   const styles = getStyles(colors);
-
+  console.log(message, "lkj");
   return (
     <View style={{ position: "relative", marginVertical: 4 }}>
       {showOptions && isMyMessage && (
@@ -88,9 +88,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
           ]}
         >
           {message.text && (
-            <Text style={[styles.messageText, { color: colors.text }]}>
-              {message.text}
-            </Text>
+            <Text style={[styles.messageText]}>{message.text}</Text>
           )}
 
           {message.image && (
@@ -106,11 +104,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
             />
           )}
 
-          <Text
-            style={[styles.messageTime, { color: colors.text, opacity: 0.7 }]}
-          >
-            {message.timestamp}
-          </Text>
+          <Text style={[styles.messageTime]}>{message.timestamp}</Text>
         </View>
       </TouchableOpacity>
     </View>

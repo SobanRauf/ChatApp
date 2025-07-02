@@ -5,13 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { router } from "expo-router";
 import React, { useMemo, useState } from "react";
-import {
-    FlatList,
-    SafeAreaView,
-    Text,
-    TextInput,
-    View
-} from "react-native";
+import { FlatList, SafeAreaView, Text, TextInput, View } from "react-native";
 
 export default function FavoritesScreen() {
   const { colors } = useTheme();
@@ -22,9 +16,10 @@ export default function FavoritesScreen() {
 
   const filteredChats = useMemo(() => {
     return chats
-      .filter((chat) =>
-        favorites.includes(chat?.id) &&
-        chat.name.toLowerCase().includes(searchQuery.toLowerCase())
+      .filter(
+        (chat) =>
+          favorites.includes(chat?.id) &&
+          chat.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
       .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
   }, [chats, favorites, searchQuery]);
@@ -35,7 +30,6 @@ export default function FavoritesScreen() {
         <Text style={styles.headerTitle}>Favorite Chats</Text>
       </View>
 
-      {/* Search Bar */}
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="#999" />
         <TextInput

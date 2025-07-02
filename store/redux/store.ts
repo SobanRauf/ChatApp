@@ -1,36 +1,9 @@
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { combineReducers, configureStore } from '@reduxjs/toolkit';
-// import { persistReducer, persistStore } from 'redux-persist';
-// import chatsReducer from '../slices/chatSlice';
-// import messagesReducer from '../slices/messageSlice';
-// const rootReducer = combineReducers({
-//   chats: chatsReducer,
-//   messages: messagesReducer,
-// });
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
 
-// const persistConfig = {
-//   key: 'root',
-//   storage: AsyncStorage,
-//   whitelist: ['chats', 'messages'],
-// };
-
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-// export const store = configureStore({
-//   reducer: persistedReducer,
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware({
-//       serializableCheck: false,
-//     }),
-// });
-
-// export const persistor = persistStore(store);
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
-
-import chatsReducer from '../slices/chatSlice';
-import messagesReducer from '../slices/messageSlice';
+import chatsReducer from "../slices/chatSlice";
+import messagesReducer from "../slices/messageSlice";
 
 const rootReducer = combineReducers({
   chats: chatsReducer,
@@ -38,14 +11,13 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage: AsyncStorage,
-  whitelist: ['chats', 'messages'],
+  whitelist: ["chats", "messages"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// ✅ Configure store
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -56,6 +28,5 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-// ✅ TypeScript: RootState and AppDispatch
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

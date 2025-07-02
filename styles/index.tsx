@@ -5,17 +5,30 @@ import {
   responsiveWidth,
 } from "react-native-responsive-dimensions";
 
-export const getStyles = (colors) =>
+type ThemeColors = {
+  primary: string;
+  background: string;
+  card: string;
+  text: string;
+  border: string;
+  notification: string;
+  sentBubble?: string;
+  receivedBubble?: string;
+  searchBg?: string;
+  otherMsgBg?: string;
+  myMsgBg?: string;
+  messageText?: string;
+  inputcard?: string;
+};
+export const getStyles = (colors: ThemeColors) =>
   StyleSheet.create({
     screen: {
       flex: 1,
       backgroundColor: colors.background,
+      paddingTop: Platform.OS === "ios" ? 0 : responsiveHeight(3),
     },
     header: {
       padding: responsiveWidth(4),
-      // borderBottomWidth: 1,
-      // borderBottomColor: colors.border,
-      backgroundColor: colors.card,
       marginTop:
         Platform.OS === "ios" ? responsiveHeight(0) : responsiveHeight(4),
     },
@@ -102,36 +115,31 @@ export const getStyles = (colors) =>
       backgroundColor: colors.otherMsgBg,
       alignSelf: "flex-start",
       borderBottomLeftRadius: 4,
-      // borderWidth: 1,
-      // borderColor: colors.border,
     },
     messageText: {
       fontSize: responsiveFontSize(2),
+      color: colors.text,
     },
     messageTime: {
       fontSize: responsiveFontSize(1.4),
       alignSelf: "flex-end",
       marginTop: 5,
+      color: "gray",
     },
     inputContainer: {
       flexDirection: "row",
       alignItems: "center",
       padding: responsiveWidth(2),
-      // borderTopWidth: 1,
-      // borderTopColor: colors.border,
       backgroundColor: colors.card,
-      marginBottom: Platform.OS === "ios" ? 0 : responsiveHeight(4),
     },
     textInput: {
       flex: 1,
       height: responsiveHeight(7),
-      backgroundColor: "#F2F2F2",
       borderRadius: responsiveWidth(10),
       paddingHorizontal: responsiveWidth(4),
       fontSize: responsiveFontSize(2),
+      backgroundColor: colors.inputcard,
       color: colors.text,
-      // borderWidth: 1,
-      // borderColor: colors.border,
     },
     sendButton: {
       marginLeft: responsiveWidth(2),
@@ -145,13 +153,15 @@ export const getStyles = (colors) =>
     searchContainer: {
       flexDirection: "row",
       alignItems: "center",
-      backgroundColor: colors.searchBg, // light grey for light mode, dark border for dark mode
+      backgroundColor: colors.searchBg,
       borderRadius: responsiveWidth(4),
       marginHorizontal: responsiveWidth(5),
       marginBottom: responsiveHeight(2),
       paddingHorizontal: responsiveWidth(4),
       height: responsiveHeight(5.5),
       marginTop: responsiveHeight(2),
+      borderColor: "#EBEFF0",
+      borderWidth: 1,
     },
     searchInput: {
       flex: 1,
@@ -181,5 +191,87 @@ export const getStyles = (colors) =>
       flex: 1,
       fontSize: responsiveFontSize(2.2),
       fontWeight: "600",
+    },
+    profileContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      flex: 1,
+    },
+
+    profileAvatar: {
+      width: responsiveWidth(30),
+      height: responsiveWidth(30),
+      borderRadius: responsiveWidth(15),
+      borderWidth: 2,
+      borderColor: "#793DED",
+      marginBottom: responsiveHeight(3),
+      marginTop:
+        Platform.OS === "ios" ? responsiveHeight(0) : responsiveHeight(4),
+    },
+
+    profileName: {
+      fontSize: responsiveFontSize(3),
+      fontWeight: "bold",
+      color: "#793DED",
+      marginBottom: responsiveHeight(4),
+    },
+
+    switchContainer: {
+      backgroundColor: colors.card,
+      padding: responsiveWidth(5),
+      borderRadius: 15,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.1,
+      shadowRadius: 5,
+      elevation: 5,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      width: responsiveWidth(80),
+    },
+    switchLabel: {
+      fontSize: responsiveFontSize(2),
+      color: colors.text,
+      marginRight: responsiveWidth(3),
+    },
+    menuOption: {
+      backgroundColor: colors.card,
+      padding: responsiveWidth(4),
+      borderRadius: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      width: responsiveWidth(80),
+      marginTop: responsiveHeight(2),
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.1,
+      shadowRadius: 5,
+      elevation: 3,
+    },
+    menuLeft: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    menuLabel: {
+      fontSize: responsiveFontSize(2),
+      color: colors.text,
+      marginLeft: responsiveWidth(3),
+    },
+    logoutButton: {
+      backgroundColor: colors.myMsgBg,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      width: responsiveWidth(80),
+      padding: responsiveWidth(4),
+      borderRadius: 20,
+      marginTop: responsiveHeight(4),
+    },
+    logoutLabel: {
+      fontSize: responsiveFontSize(2),
+      color: colors.text,
+      marginLeft: responsiveWidth(2),
     },
   });

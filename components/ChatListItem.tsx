@@ -1,14 +1,14 @@
+import { useAppSelector } from "@/store/redux/hook";
 import { getStyles } from "@/styles";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { responsiveFontSize } from "react-native-responsive-dimensions";
-import { useSelector } from "react-redux";
 
-const ChatListItem = ({ item, onPress }) => {
+const ChatListItem = ({ item, onPress }: any) => {
   const { colors } = useTheme();
-  const favorites = useSelector((state) => state.chats.favorites);
+  const favorites = useAppSelector((state) => state.chats.favorites);
   const isFavorite = favorites.includes(item.id);
   const styles = getStyles(colors);
 

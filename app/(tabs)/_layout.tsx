@@ -1,46 +1,3 @@
-// import { Ionicons } from '@expo/vector-icons';
-// import { useTheme } from '@react-navigation/native';
-// import { Tabs } from 'expo-router';
-// import React from 'react';
-// import { responsiveHeight } from 'react-native-responsive-dimensions';
-
-// export default function TabsLayout() {
-//   const { colors } = useTheme();
-
-//   return (
-//     <Tabs
-//       screenOptions={{
-//         tabBarActiveTintColor: colors.primary,
-//         tabBarInactiveTintColor: 'gray',
-//         headerShown: false,
-//         tabBarStyle: {
-//           backgroundColor: colors.card,
-//           borderTopColor: colors.border,
-//           height: responsiveHeight(8),
-//           paddingBottom: responsiveHeight(1),
-//         },
-//       }}>
-//       <Tabs.Screen
-//         name="index"
-//         options={{
-//           title: 'Chats',
-//           tabBarIcon: ({ color, focused }) => (
-//             <Ionicons name={focused ? 'chatbubbles' : 'chatbubbles-outline'} size={24} color={color} />
-//           ),
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="explore"
-//         options={{
-//           title: 'Profile',
-//           tabBarIcon: ({ color, focused }) => (
-//             <Ionicons name={focused ? 'person' : 'person-outline'} size={24} color={color} />
-//           ),
-//         }}
-//       />
-//     </Tabs>
-//   );
-// }
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { Tabs } from "expo-router";
@@ -55,6 +12,7 @@ import {
 export default function TabsLayout() {
   const { colors, dark } = useTheme();
   const focusedColor = "#793DED";
+  const tabOrder = ["index", "favourites", "profile"];
 
   return (
     <Tabs
@@ -70,9 +28,12 @@ export default function TabsLayout() {
             },
           ]}
         >
-          {state.routes.map((route, index) => {
-            const isFocused = state.index === index;
-
+          {tabOrder.map((routeName) => {
+            const routeIndex = state.routes.findIndex(
+              (route) => route.name === routeName
+            );
+            const route = state.routes[routeIndex];
+            const isFocused = state.index === routeIndex;
             const onPress = () => {
               const event = navigation.emit({
                 type: "tabPress",
@@ -84,17 +45,12 @@ export default function TabsLayout() {
                 navigation.navigate(route.name);
               }
             };
-
-            // ✅ Icon mapping
-            let iconName = "";
+            let iconName = "help-circle";
             if (route.name === "index") {
               iconName = isFocused ? "chatbubble" : "chatbubble-outline";
-            } 
-            else 
-            if (route.name === "favorites") {
+            } else if (route.name === "favourites") {
               iconName = isFocused ? "heart" : "heart-outline";
-            } 
-            else if (route.name === "explore") {
+            } else if (route.name === "profile") {
               iconName = isFocused ? "person" : "person-outline";
             }
 
@@ -104,11 +60,16 @@ export default function TabsLayout() {
                 onPress={onPress}
                 style={styles.tabButton}
               >
-                <Ionicons
-                  name={iconName as any}
-                  size={responsiveFontSize(3)}
-                  color={isFocused ? focusedColor : "#aaa"}
-                />
+                <View style={styles.tabContent}>
+                  <Ionicons
+                    name={iconName as any}
+                    size={responsiveFontSize(3)}
+                    color={isFocused ? focusedColor : "#aaa"}
+                  />
+                  {isFocused && (
+                    <View style={[styles.focusIndicator, { backgroundColor: focusedColor }]} />
+                  )}
+                </View>
               </TouchableOpacity>
             );
           })}
@@ -135,6 +96,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  tabContent: {
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  focusIndicator: {
+    width: responsiveWidth(1.5),
+    height: responsiveWidth(1.5),
+    borderRadius: responsiveWidth(0.75),
+    marginTop: responsiveHeight(0.5),
+    position: "absolute",
+    bottom: -responsiveHeight(1),
   },
   lightShadow: {
     ...Platform.select({

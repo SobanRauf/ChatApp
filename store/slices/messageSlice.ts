@@ -1,6 +1,6 @@
 import { initialMessages } from "@/data";
 import { createSlice } from "@reduxjs/toolkit";
-
+import { Toast } from "toastify-react-native";
 const messagesSlice = createSlice({
   name: "messages",
   initialState: initialMessages,
@@ -17,6 +17,7 @@ const messagesSlice = createSlice({
       const { chatId, messageId } = action.payload;
       if (state[chatId]) {
         state[chatId] = state[chatId].filter((m) => m.id !== messageId);
+        Toast.success("Message Deleted");
       }
     },
     editMessage: (state, action) => {
